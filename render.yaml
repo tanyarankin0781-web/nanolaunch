@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: nanolaunch
+    runtime: python
+    plan: starter            # persistent disks need a paid plan; "free" works but resets data on every deploy
+    buildCommand: "echo no build step"
+    startCommand: python app.py
+    healthCheckPath: /
+    envVars:
+      - key: SITE_URL
+        sync: false          # set to your https URL, e.g. https://nanolaunch.onrender.com
+      - key: ANTHROPIC_API_KEY
+        sync: false          # optional: enables Claude-written launch copy
+      - key: DATA_DIR
+        value: /data
+    disk:
+      name: nanolaunch-data
+      mountPath: /data
+      sizeGB: 1
